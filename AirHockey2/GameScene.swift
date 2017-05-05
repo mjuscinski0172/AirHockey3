@@ -140,12 +140,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.rightScore.text = "0"
             self.leftScoreCounter = 0
             self.rightScoreCounter = 0
-            let puckPoint = CGPoint(x: 0, y: -50)
-            let rightPaddlePoint = CGPoint(x: 410, y: -50)
-            let leftPaddlePoint = CGPoint(x: -410, y: -50)
-            self.puck.run(SKAction.move(to: puckPoint, duration: 0))
-            self.rightPaddle.run(SKAction.move(to: rightPaddlePoint, duration: 0))
-            self.leftPaddle.run(SKAction.move(to: leftPaddlePoint, duration: 0))
+            self.puck.run(SKAction.move(to: CGPoint(x: 0, y: -50), duration: 0))
+            self.rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: -50), duration: 0))
+            self.leftPaddle.run(SKAction.move(to: CGPoint(x: -410, y: -50), duration: 0))
 
             
         }

@@ -30,6 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var rightScore = SKLabelNode()
     var leftScoreCounter = 0
     var rightScoreCounter = 0
+    var winnerLabel = SKLabelNode()
     
     override func didMove(to view: SKView)
     {
@@ -40,6 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         leftGoal = self.childNode(withName: "leftGoal") as! SKSpriteNode
         leftScore = self.childNode(withName: "leftScore") as! SKLabelNode
         rightScore = self.childNode(withName: "rightScore") as! SKLabelNode
+        winnerLabel = self.childNode(withName: "winnerLabel") as! SKLabelNode
         
         physicsWorld.contactDelegate = self
         

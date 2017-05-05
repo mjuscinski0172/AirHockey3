@@ -43,8 +43,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         physicsWorld.contactDelegate = self
         
-        let bottomLeft = CGPoint(x: frame.origin.x, y: frame.origin.y)
-        let bottomRight = CGPoint(x: -frame.origin.x, y: frame.origin.y)
+        let bottomLeft = CGPoint(x: frame.origin.x + 25, y: frame.origin.y)
+        let bottomRight = CGPoint(x: -frame.origin.x - 25, y: frame.origin.y)
         let topLeft = CGPoint(x: frame.origin.x, y: 284)
         let topRight = CGPoint(x: -frame.origin.x, y: 284)
         
@@ -83,10 +83,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-            if location.x > 0 && location.y < 249{
+            if location.x > 0 && location.y < 249 && location.x < -frame.origin.x - 25{
                 rightPaddle.run(SKAction.move(to: location, duration: 0.1))
             }
-            if location.x < 0 && location.y < 249 {
+            if location.x < 0 && location.y < 249 && location.x > frame.origin.x + 25{
                 leftPaddle.run(SKAction.move(to: location, duration: 0.1))
             }
         }
@@ -107,14 +107,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.categoryBitMask == rightGoalCategory {
-            print("Here")
             leftScoreCounter += 1
-            print(leftScoreCounter)
             leftScore.text = "\(leftScoreCounter)"
+            puck.run(SKAction.move(to: CGPoint(x: 150, y: -50), duration: 0.0))
         }
         else if contact.bodyA.categoryBitMask == leftGoalCategory {
             rightScoreCounter += 1
             rightScore.text = "\(rightScoreCounter)"
+            puck.run(SKAction.move(to: CGPoint(x: -150, y: -50), duration: 0.0))
         }
     }
     

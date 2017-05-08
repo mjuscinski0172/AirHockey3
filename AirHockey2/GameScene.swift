@@ -92,7 +92,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 leftPaddle.run(SKAction.move(to: location, duration: 0.1))
             }
         }
-        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -112,7 +112,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             leftScoreCounter += 1
             leftScore.text = "\(leftScoreCounter)"
             if leftScoreCounter == 10 {
-                winnerLabel.text = "Player 1 Wins!"
+                var alert = UIAlertController(title: "Player One Wins!", message: nil, preferredStyle: .alert)
+                var backToMenu = UIAlertAction(title: "Back to Main Menu", style: .default , handler: { (UIAlertAction) in
+                    
+                })
                 reset()
             }
             else {

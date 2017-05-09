@@ -92,7 +92,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 leftPaddle.run(SKAction.move(to: location, duration: 0.1))
             }
         }
-        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -112,11 +111,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             leftScoreCounter += 1
             leftScore.text = "\(leftScoreCounter)"
             if leftScoreCounter == 10 {
-                var alert = UIAlertController(title: "Player One Wins!", message: nil, preferredStyle: .alert)
-                var backToMenu = UIAlertAction(title: "Back to Main Menu", style: .default , handler: { (UIAlertAction) in
+                let alert = UIAlertController(title: "Player One Wins!", message: nil, preferredStyle: .alert)
+                let backToMenu = UIAlertAction(title: "Back to Main Menu", style: .default , handler: { (UIAlertAction) in
                     
                 })
-                reset()
+                let resetButton = UIAlertAction(title: "Play Again", style: .default, handler: { (UIAlertAction) in
+                    self.reset()
+                })
+                alert.addAction(backToMenu)
+                alert.addAction(resetButton)
+                self.view?.window?.rootViewController?.present(alert, animated: true, completion: nil)
             }
             else {
                 puck.run(SKAction.move(to: CGPoint(x: 150, y: -50), duration: 0.0))
@@ -126,8 +130,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             rightScoreCounter += 1
             rightScore.text = "\(rightScoreCounter)"
             if rightScoreCounter == 10 {
-                winnerLabel.text = "Player 2 Wins!"
-                reset()
+                let alert = UIAlertController(title: "Player Two Wins!", message: nil, preferredStyle: .alert)
+                let backToMenu = UIAlertAction(title: "Back to Main Menu", style: .default , handler: { (UIAlertAction) in
+                    
+                })
+                let resetButton = UIAlertAction(title: "Play Again", style: .default, handler: { (UIAlertAction) in
+                    self.reset()
+                })
+                alert.addAction(backToMenu)
+                alert.addAction(resetButton)
+                self.view?.window?.rootViewController?.present(alert, animated: true, completion: nil)
             }
             else {
                 puck.run(SKAction.move(to: CGPoint(x: -150, y: -50), duration: 0.0))

@@ -78,29 +78,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         rightGoal.physicsBody?.categoryBitMask = rightGoalCategory
         
         puck.physicsBody?.contactTestBitMask = paddleCategory | leftGoalCategory | rightGoalCategory
-        
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
+        for touch in touches
+        {
             let location = touch.location(in: self)
-            if location.x > 0 && location.y < 249 && location.x < -frame.origin.x - 25{
+            if location.x > 0 && location.y < 249 && location.x < -frame.origin.x - 25
+            {
                 rightPaddle.run(SKAction.move(to: location, duration: 0.1))
             }
-            if location.x < 0 && location.y < 249 && location.x > frame.origin.x + 25{
+            
+            if location.x < 0 && location.y < 249 && location.x > frame.origin.x + 25
+            {
                 leftPaddle.run(SKAction.move(to: location, duration: 0.1))
             }
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
+        for touch in touches
+        {
             let location = touch.location(in: self)
-            if location.x > 0 && location.y < 249{
+            
+            if location.x > 0 && location.y < 249
+            {
                 rightPaddle.run(SKAction.move(to: location, duration: 0.1))
             }
-            if location.x < 0 && location.y < 249 {
+            
+            if location.x < 0 && location.y < 249
+            {
                 leftPaddle.run(SKAction.move(to: location, duration: 0.1))
             }
         }
@@ -113,7 +120,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if leftScoreCounter == 10 {
                 let alert = UIAlertController(title: "Player One Wins!", message: nil, preferredStyle: .alert)
                 let backToMenu = UIAlertAction(title: "Back to Main Menu", style: .default , handler: { (UIAlertAction) in
-                    
                 })
                 let resetButton = UIAlertAction(title: "Play Again", style: .default, handler: { (UIAlertAction) in
                     self.reset()
@@ -123,16 +129,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.view?.window?.rootViewController?.present(alert, animated: true, completion: nil)
             }
             else {
-                puck.run(SKAction.move(to: CGPoint(x: 150, y: -50), duration: 0.0))
-            }
+                    puck.run(SKAction.move(to: CGPoint(x: 150, y: -50), duration: 0.0))
+                 }
         }
+            
         else if contact.bodyA.categoryBitMask == leftGoalCategory {
             rightScoreCounter += 1
             rightScore.text = "\(rightScoreCounter)"
             if rightScoreCounter == 10 {
                 let alert = UIAlertController(title: "Player Two Wins!", message: nil, preferredStyle: .alert)
                 let backToMenu = UIAlertAction(title: "Back to Main Menu", style: .default , handler: { (UIAlertAction) in
-                    
                 })
                 let resetButton = UIAlertAction(title: "Play Again", style: .default, handler: { (UIAlertAction) in
                     self.reset()
@@ -141,11 +147,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 alert.addAction(resetButton)
                 self.view?.window?.rootViewController?.present(alert, animated: true, completion: nil)
             }
+                
             else {
                 puck.run(SKAction.move(to: CGPoint(x: -150, y: -50), duration: 0.0))
+                }
             }
         }
-    }
     
     func reset() {
         let delayInSeconds = 4.0
@@ -158,12 +165,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.puck.run(SKAction.move(to: CGPoint(x: 0, y: -50), duration: 0))
             self.rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: -50), duration: 0))
             self.leftPaddle.run(SKAction.move(to: CGPoint(x: -410, y: -50), duration: 0))
-
-            
         }
     }
     
     override func update(_ currentTime: TimeInterval) {
-        
     }
 }

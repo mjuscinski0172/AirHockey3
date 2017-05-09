@@ -70,31 +70,36 @@ class onePlayer: SKScene, SKPhysicsContactDelegate {
         
         puck.physicsBody?.contactTestBitMask = paddleCategory | leftGoalCategory | rightGoalCategory
         
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-            if location.x > 0 && location.y < 249 && location.x < -frame.origin.x - 25{
-                rightPaddle.run(SKAction.move(to: location, duration: 0.1))
-            }
             if location.x < 0 && location.y < 249 && location.x > frame.origin.x + 25{
                 leftPaddle.run(SKAction.move(to: location, duration: 0.1))
             }
         }
-        
+        if puck.position.x < 0 {
+            rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: puck.position.y), duration: 0.2))
+        }
+        else if puck.position.x > 0 {
+            rightPaddle.run(SKAction.move(to: CGPoint(x: puck.position.x, y: puck.position.y), duration: 0.2))
+        }
+    
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-            if location.x > 0 && location.y < 249{
-                rightPaddle.run(SKAction.move(to: location, duration: 0.1))
-            }
-            if location.x < 0 && location.y < 249 {
+            if location.x < 0 && location.y < 249 && location.x > frame.origin.x + 25{
                 leftPaddle.run(SKAction.move(to: location, duration: 0.1))
             }
+        }
+        if puck.position.x < 0 {
+            rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: puck.position.y), duration: 0.2))
+        }
+        else if puck.position.x > 0 {
+            rightPaddle.run(SKAction.move(to: CGPoint(x: puck.position.x, y: puck.position.y), duration: 0.2))
         }
     }
     
@@ -142,4 +147,6 @@ class onePlayer: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         
     }
+    
+    
 }

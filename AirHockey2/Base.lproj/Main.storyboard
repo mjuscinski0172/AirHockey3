@@ -58,6 +58,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="yJI-L4-eob" kind="show" identifier="gameSceneOneSegue" id="UGX-LO-oh8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2uh-Af-TGA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -76,10 +79,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <connections>
+                        <segue destination="yJI-L4-eob" kind="show" identifier="gameSceneTwoSegue" id="Bzo-mi-FCD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-142" y="455"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="UGX-LO-oh8"/>
+    </inferredMetricsTieBreakers>
 </document>

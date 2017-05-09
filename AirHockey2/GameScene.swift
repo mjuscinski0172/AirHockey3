@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import UIKit
 
 
 let puckCategory: UInt32 = 0x1 << 0
@@ -117,7 +118,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.categoryBitMask == rightGoalCategory {
             leftScoreCounter += 1
             leftScore.text = "\(leftScoreCounter)"
-            if leftScoreCounter == 10 {
+            if leftScoreCounter == 2 {
                 let alert = UIAlertController(title: "Player One Wins!", message: nil, preferredStyle: .alert)
                 let backToMenu = UIAlertAction(title: "Back to Main Menu", style: .default , handler: { (UIAlertAction) in
                 })
@@ -136,7 +137,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if contact.bodyA.categoryBitMask == leftGoalCategory {
             rightScoreCounter += 1
             rightScore.text = "\(rightScoreCounter)"
-            if rightScoreCounter == 10 {
+            if rightScoreCounter == 2 {
                 let alert = UIAlertController(title: "Player Two Wins!", message: nil, preferredStyle: .alert)
                 let backToMenu = UIAlertAction(title: "Back to Main Menu", style: .default , handler: { (UIAlertAction) in
                 })

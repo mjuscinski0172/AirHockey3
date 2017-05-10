@@ -99,27 +99,13 @@ class onePlayer: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.categoryBitMask == rightGoalCategory {
             leftScoreCounter += 1
             leftScore.text = "\(leftScoreCounter)"
-            if leftScoreCounter == 10
-            {
-                winnerLabel.text = "Player 1 Wins!"
-                reset()
-            }
-            else {
-                puck.run(SKAction.move(to: CGPoint(x: 150, y: -50), duration: 0.0))
-            }
+            puck.run(SKAction.move(to: CGPoint(x: 150, y: -50), duration: 0.0))
         }
             
         else if contact.bodyA.categoryBitMask == leftGoalCategory {
             rightScoreCounter += 1
             rightScore.text = "\(rightScoreCounter)"
-            if rightScoreCounter == 10
-            {
-                winnerLabel.text = "Player 2 Wins!"
-                reset()
-            }
-            else {
-                puck.run(SKAction.move(to: CGPoint(x: -150, y: -50), duration: 0.0))
-            }
+            puck.run(SKAction.move(to: CGPoint(x: -150, y: -50), duration: 0.0))
         }
     }
     
@@ -136,9 +122,10 @@ class onePlayer: SKScene, SKPhysicsContactDelegate {
             self.leftPaddle.run(SKAction.move(to: CGPoint(x: -410, y: -50), duration: 0))
         }
     }
-    
+    var counter = 1
+    var timerCounter = 120
     override func update(_ currentTime: TimeInterval) {
-
+        counter += 1
         if puck.position.x < 0
         {
             rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: puck.position.y), duration: 0.2))
@@ -147,6 +134,25 @@ class onePlayer: SKScene, SKPhysicsContactDelegate {
         else if puck.position.x > 0
         {
             rightPaddle.run(SKAction.move(to: CGPoint(x: puck.position.x, y: puck.position.y), duration: 0.2))
+        }
+        
+        if counter % 13 == 0 && timerCounter != 0
+        {
+            timerCounter -= 1
+            winnerLabel.text = "\(timerCounter)"
+        }
+        else if timerCounter == 0
+        {
+            if rightScoreCounter > leftScoreCounter
+            {
+                winnerLabel.text = "Player 2 Wins!"
+                reset()
+            }
+            else if leftScoreCounter > rightScoreCounter
+            {
+                winnerLabel.text = "Player 1 Wins!"
+                reset()
+            }
         }
     }
 }

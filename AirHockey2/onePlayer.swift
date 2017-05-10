@@ -81,15 +81,6 @@ class onePlayer: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        if puck.position.x < 0
-        {
-            rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: puck.position.y), duration: 0.2))
-        }
-            
-        else if puck.position.x > 0
-        {
-            rightPaddle.run(SKAction.move(to: CGPoint(x: puck.position.x, y: puck.position.y), duration: 0.2))
-        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -102,15 +93,6 @@ class onePlayer: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        if puck.position.x < 0
-        {
-            rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: puck.position.y), duration: 0.2))
-        }
-            
-        else if puck.position.x > 0
-        {
-            rightPaddle.run(SKAction.move(to: CGPoint(x: puck.position.x, y: puck.position.y), duration: 0.2))
-        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -156,5 +138,15 @@ class onePlayer: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(_ currentTime: TimeInterval) {
+
+        if puck.position.x < 0
+        {
+            rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: puck.position.y), duration: 0.2))
+        }
+            
+        else if puck.position.x > 0
+        {
+            rightPaddle.run(SKAction.move(to: CGPoint(x: puck.position.x, y: puck.position.y), duration: 0.2))
+        }
     }
 }

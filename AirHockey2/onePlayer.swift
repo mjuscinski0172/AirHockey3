@@ -9,7 +9,6 @@
 import SpriteKit
 import GameplayKit
 
-
 class onePlayer: SKScene, SKPhysicsContactDelegate {
     
     var rightPaddle = SKSpriteNode()
@@ -73,65 +72,47 @@ class onePlayer: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
+        for touch in touches
+        {
             let location = touch.location(in: self)
-            if location.x < 0 && location.y < 249 && location.x > frame.origin.x + 25{
+            if location.x < 0 && location.y < 249 && location.x > frame.origin.x + 25
+            {
                 leftPaddle.run(SKAction.move(to: location, duration: 0.1))
             }
         }
-        if puck.position.x < 0 {
-            rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: puck.position.y), duration: 0.2))
-        }
-        else if puck.position.x > 0 {
-            rightPaddle.run(SKAction.move(to: CGPoint(x: puck.position.x, y: puck.position.y), duration: 0.2))
-        }
-    
+        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
+        for touch in touches
+        {
             let location = touch.location(in: self)
-            if location.x < 0 && location.y < 249 && location.x > frame.origin.x + 25{
+            if location.x < 0 && location.y < 249 && location.x > frame.origin.x + 25
+            {
                 leftPaddle.run(SKAction.move(to: location, duration: 0.1))
             }
         }
-        if puck.position.x < 0 {
-            rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: puck.position.y), duration: 0.2))
-        }
-        else if puck.position.x > 0 {
-            rightPaddle.run(SKAction.move(to: CGPoint(x: puck.position.x, y: puck.position.y), duration: 0.2))
-        }
+        
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.categoryBitMask == rightGoalCategory {
             leftScoreCounter += 1
             leftScore.text = "\(leftScoreCounter)"
-            if leftScoreCounter == 10 {
-                winnerLabel.text = "Player 1 Wins!"
-                reset()
-            }
-            else {
-                puck.run(SKAction.move(to: CGPoint(x: 150, y: -50), duration: 0.0))
-            }
+            puck.run(SKAction.move(to: CGPoint(x: 150, y: -50), duration: 0.0))
         }
+            
         else if contact.bodyA.categoryBitMask == leftGoalCategory {
             rightScoreCounter += 1
             rightScore.text = "\(rightScoreCounter)"
-            if rightScoreCounter == 10 {
-                winnerLabel.text = "Player 2 Wins!"
-                reset()
-            }
-            else {
-                puck.run(SKAction.move(to: CGPoint(x: -150, y: -50), duration: 0.0))
-            }
+            puck.run(SKAction.move(to: CGPoint(x: -150, y: -50), duration: 0.0))
         }
     }
     
     func reset() {
         let delayInSeconds = 4.0
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds) {
-            self.winnerLabel.text = "Play!"
+            self.winnerLabel.text = "120"
             self.leftScore.text = "0"
             self.rightScore.text = "0"
             self.leftScoreCounter = 0
@@ -139,14 +120,44 @@ class onePlayer: SKScene, SKPhysicsContactDelegate {
             self.puck.run(SKAction.move(to: CGPoint(x: 0, y: -50), duration: 0))
             self.rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: -50), duration: 0))
             self.leftPaddle.run(SKAction.move(to: CGPoint(x: -410, y: -50), duration: 0))
-            
-            
+            self.counter = 1
+            self.timerCounter = 120
         }
     }
-    
+    var counter = 1
+    var timerCounter = 120
     override func update(_ currentTime: TimeInterval) {
+        counter += 1
+        if puck.position.x < 0
+        {
+            rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: puck.position.y), duration: 0.2))
+        }
+            
+        else if puck.position.x > 0
+        {
+            rightPaddle.run(SKAction.move(to: CGPoint(x: puck.position.x, y: puck.position.y), duration: 0.2))
+        }
         
+        if counter % 13 == 0 && timerCounter != 0
+        {
+            timerCounter -= 1
+            winnerLabel.text = "\(timerCounter)"
+        }
+        else if timerCounter == 0
+        {
+            if rightScoreCounter > leftScoreCounter
+            {
+                winnerLabel.text = "Player 2 Wins!"
+                reset()
+            }
+            else if leftScoreCounter > rightScoreCounter
+            {
+                winnerLabel.text = "Player 1 Wins!"
+                reset()
+            }
+            else {
+                reset()
+            }
+        }
     }
-    
-    
 }

@@ -112,7 +112,7 @@ class onePlayer: SKScene, SKPhysicsContactDelegate {
     func reset() {
         let delayInSeconds = 4.0
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds) {
-            self.winnerLabel.text = "Play!"
+            self.winnerLabel.text = "120"
             self.leftScore.text = "0"
             self.rightScore.text = "0"
             self.leftScoreCounter = 0
@@ -120,6 +120,8 @@ class onePlayer: SKScene, SKPhysicsContactDelegate {
             self.puck.run(SKAction.move(to: CGPoint(x: 0, y: -50), duration: 0))
             self.rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: -50), duration: 0))
             self.leftPaddle.run(SKAction.move(to: CGPoint(x: -410, y: -50), duration: 0))
+            self.counter = 1
+            self.timerCounter = 120
         }
     }
     var counter = 1
@@ -151,6 +153,9 @@ class onePlayer: SKScene, SKPhysicsContactDelegate {
             else if leftScoreCounter > rightScoreCounter
             {
                 winnerLabel.text = "Player 1 Wins!"
+                reset()
+            }
+            else {
                 reset()
             }
         }

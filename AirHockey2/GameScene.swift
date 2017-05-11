@@ -33,6 +33,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var rightScoreCounter = 0
     var winnerLabel = SKLabelNode()
     
+    var oneOrTwo = 0
+    
     override func didMove(to view: SKView)
     {
         rightPaddle = self.childNode(withName: "rightPaddle") as! SKSpriteNode
@@ -43,9 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         leftScore = self.childNode(withName: "leftScore") as! SKLabelNode
         rightScore = self.childNode(withName: "rightScore") as! SKLabelNode
         winnerLabel = self.childNode(withName: "winnerLabel") as! SKLabelNode
-        
-        print(self.view?.window?.rootViewController)
-        
+                
         physicsWorld.contactDelegate = self
         
         let bottomLeft = CGPoint(x: frame.origin.x + 25, y: frame.origin.y)
@@ -81,6 +81,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         rightGoal.physicsBody?.categoryBitMask = rightGoalCategory
         
         puck.physicsBody?.contactTestBitMask = paddleCategory | leftGoalCategory | rightGoalCategory
+//        
+//        let alert = UIAlertController(title: "One or Two Players?", message: nil, preferredStyle: .alert)
+//        let oneAction = UIAlertAction(title: "One Player", style: .default) { (UIAlertAction) in
+//            self.oneOrTwo = 1
+//        }
+//        let twoAction = UIAlertAction(title: "Two Players", style: .default) { (UIAlertAction) in
+//            self.oneOrTwo = 2
+//        }
+//        alert.addAction(oneAction)
+//        alert.addAction(twoAction)
+//        self.view?.window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -89,7 +100,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let location = touch.location(in: self)
             if location.x > 0 && location.y < 249 && location.x < -frame.origin.x - 25
             {
-                rightPaddle.run(SKAction.move(to: location, duration: 0.1))
+                if oneOrTwo == 2 {
+                    rightPaddle.run(SKAction.move(to: location, duration: 0.1))
+                }
+                else if oneOrTwo == 1 {
+                    
+                }
             }
             
             if location.x < 0 && location.y < 249 && location.x > frame.origin.x + 25
@@ -170,12 +186,89 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.rightScore.text = "0"
             self.leftScoreCounter = 0
             self.rightScoreCounter = 0
+            self.oneOrTwo = 0
             self.puck.run(SKAction.move(to: CGPoint(x: 0, y: -50), duration: 0))
             self.rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: -50), duration: 0))
             self.leftPaddle.run(SKAction.move(to: CGPoint(x: -410, y: -50), duration: 0))
+//            let alert = UIAlertController(title: "One or Two Players?", message: nil, preferredStyle: .alert)
+//            let oneAction = UIAlertAction(title: "One Player", style: .default) { (UIAlertAction) in
+//                self.oneOrTwo = 1
+//            }
+//            let twoAction = UIAlertAction(title: "Two Players", style: .default) { (UIAlertAction) in
+//                self.oneOrTwo = 2
+//            }
+//            alert.addAction(oneAction)
+//            alert.addAction(twoAction)
+//            self.view?.window?.rootViewController?.present(alert, animated: true, completion: nil)
         }
     }
     
+    var counter = 1
+    var timerCounter = 120
+    var presentedOrNo = false
+    
     override func update(_ currentTime: TimeInterval) {
+
+        if oneOrTwo == 0{
+            let alert = UIAlertController(title: "One or Two Players?", message: nil, preferredStyle: .alert)
+            let oneAction = UIAlertAction(title: "One Player", style: .default) { (UIAlertAction) in
+                self.oneOrTwo = 1
+            }
+            let twoAction = UIAlertAction(title: "Two Players", style: .default) { (UIAlertAction) in
+                self.oneOrTwo = 2
+            }
+            alert.addAction(oneAction)
+            alert.addAction(twoAction)
+            if presentedOrNo == false
+            {
+                self.view?.window?.rootViewController?.present(alert, animated: true, completion: nil)
+                presentedOrNo = true
+            }
+        }
+        if oneOrTwo != 0 {
+            counter += 1
+        }
+        if puck.position.x < 0
+        {
+            rightPaddle.run(SKAction.move(to: CGPoint(x: 410, y: puck.position.y), duration: 0.2))
+        }
+            
+        else if puck.position.x > 0
+        {
+            rightPaddle.run(SKAction.move(to: CGPoint(x: puck.position.x, y: puck.position.y), duration: 0.2))
+        }
+        
+        if counter % 14 == 0 && timerCounter != 0
+        {
+            if counter == 14 {
+                winnerLabel.text = "Ready!"
+            }
+            else if counter == 28 {
+                winnerLabel.text = "Set!"
+            }
+            else if counter == 42 {
+                winnerLabel.text = "GO!"
+            }
+            else {
+                timerCounter -= 1
+                winnerLabel.text = "\(timerCounter)"
+            }
+        }
+        else if timerCounter == 0
+        {
+            if rightScoreCounter > leftScoreCounter
+            {
+                winnerLabel.text = "Player 2 Wins!"
+                reset()
+            }
+            else if leftScoreCounter > rightScoreCounter
+            {
+                winnerLabel.text = "Player 1 Wins!"
+                reset()
+            }
+            else {
+                reset()
+            }
+        }
     }
 }
